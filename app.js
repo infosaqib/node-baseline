@@ -1,22 +1,21 @@
-import express from "express";
+dotenv.config();
 import dotenv from "dotenv";
+import express from "express";
 
 import connectDB from "./config/db.config.js";
-import apiRouter from "./routes/api.routes.js";
 import indexMiddlewares from "./middlewares/index.middleware.js";
 import { setupErrorHandlers } from "./middlewares/errorHandler.middleware.js";
-import { connectDB } from "./config/db.config.js";
 
-dotenv.config();
+import indexRoutes from "./routes/index.route.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 indexMiddlewares(app);
 
-app.use("/api", apiRouter);
+app.use("/v1", indexRoutes);
 
-app.get("/health", (req, res) => {
+app.get("/v1/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
